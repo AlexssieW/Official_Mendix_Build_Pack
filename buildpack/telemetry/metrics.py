@@ -20,7 +20,7 @@ from buildpack.infrastructure import database
 from lib.m2ee import munin
 from lib.m2ee.version import MXVersion
 
-import datadog
+from . import datadog
 
 # Runtime configuration for influx registry
 # This enables the new stream of metrics coming from micrometer instead

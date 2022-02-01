@@ -20,6 +20,8 @@ from buildpack.infrastructure import database
 from lib.m2ee import munin
 from lib.m2ee.version import MXVersion
 
+import datadog
+
 # Runtime configuration for influx registry
 # This enables the new stream of metrics coming from micrometer instead
 # of the admin port.
@@ -49,6 +51,14 @@ PAIDAPPS_METRICS_REGISTRY = [
         ],
     }
 ]
+
+STATSD_REGESTRY = {
+    "type": "statsd",
+    "settings": {
+      "host": os.getenv("DD_SITE", "app.datadoghq.com"),
+      "port": datadog.get_statsd_port()
+    }
+  }
 
 # For freeapps we push only the session metrics
 FREEAPPS_METRICS_REGISTRY = [
@@ -158,14 +168,20 @@ def configure_influx_registry(m2ee):
     if not micrometer_metrics_enabled(runtime.get_runtime_version()):
         return {}
 
-    logging.info(f"DUMMY LOG, RUNTIME VERSION {runtime.get_runtime_version()}")
     logging.info(
         "Configuring runtime to push metrics to influx via micrometer"
     )
     if util.is_free_app():
         return {"Metrics.Registries": FREEAPPS_METRICS_REGISTRY}
 
-    return {"Metrics.Registries": PAIDAPPS_METRICS_REGISTRY}
+    paidapps_regestries = {"Metrics.Registries": PAIDAPPS_METRICS_REGISTRY}
+
+    if datadog.is_enabled():
+        paidapps_regestries["Metrics.Registries"].append(STATSD_REGESTRY)
+
+        logging.info(f"DUMMY LOG, {STATSD_REGESTRY}")
+
+    return paidapps_regestries
 
 
 def bypass_loggregator():

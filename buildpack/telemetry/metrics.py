@@ -179,7 +179,7 @@ def configure_influx_registry(m2ee):
     if datadog.is_enabled():
         paidapps_regestries["Metrics.Registries"].append(STATSD_REGESTRY)
 
-        logging.info(f"DUMMY LOG, {paidapps_regestriess}")
+        logging.info(f"DUMMY LOG, {paidapps_regestries}")
 
     return paidapps_regestries
 

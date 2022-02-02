@@ -21,6 +21,7 @@ from lib.m2ee import munin
 from lib.m2ee.version import MXVersion
 
 from . import datadog
+from buildpack import util
 
 # Runtime configuration for influx registry
 # This enables the new stream of metrics coming from micrometer instead
@@ -55,7 +56,7 @@ PAIDAPPS_METRICS_REGISTRY = [
 STATSD_REGESTRY = {
     "type": "statsd",
     "settings": {
-      "host": 'https://api.datadoghq.eu',
+      "host": util.get_hostname(),
       "port": datadog.get_statsd_port()
     }
   }

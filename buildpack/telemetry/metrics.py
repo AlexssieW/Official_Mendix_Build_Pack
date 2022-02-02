@@ -55,7 +55,7 @@ PAIDAPPS_METRICS_REGISTRY = [
 STATSD_REGESTRY = {
     "type": "statsd",
     "settings": {
-      "host": 'app.datadoghq.eu',
+      "host": 'gfhfhg',
       "port": datadog.get_statsd_port()
     }
   }

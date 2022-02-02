@@ -55,7 +55,7 @@ PAIDAPPS_METRICS_REGISTRY = [
 STATSD_REGESTRY = {
     "type": "statsd",
     "settings": {
-      "host": 'gfhfhg',
+      "host": 'app.datadoghq.eu',
       "port": datadog.get_statsd_port()
     }
   }
@@ -177,7 +177,7 @@ def configure_influx_registry(m2ee):
     paidapps_regestries = {"Metrics.Registries": PAIDAPPS_METRICS_REGISTRY}
 
     if datadog.is_enabled():
-        paidapps_regestries["Metrics.Registries"].append(STATSD_REGESTRY)
+        #paidapps_regestries["Metrics.Registries"].append(STATSD_REGESTRY)
 
         logging.info(f"DUMMY LOG, {STATSD_REGESTRY}")
 
